@@ -20,4 +20,8 @@ public class Student {
     public void saveStudent(@RequestBody StudentDTO student){
         studentService.saveStudent(student);
     }
+    @GetMapping(value = "/{id}")
+    StudentDTO getSelectedStudent(@PathVariable ("id") String id){
+       return studentService.getSelectedStudent(id);
+    }
 }

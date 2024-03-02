@@ -23,7 +23,12 @@ public class StudentServiceIMPL implements StudentService{
     }
     @Override
     public StudentDTO getSelectedStudent(String id) {
-        return null;
+       for (StudentDTO selectedStudent :saveStudent){
+           if(selectedStudent.getId().equals(id)){
+               return selectedStudent;
+           }
+       }
+       return null;
     }
 
     @Override
