@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/students")
 public class Student {
@@ -20,8 +22,12 @@ public class Student {
     public void saveStudent(@RequestBody StudentDTO student){
         studentService.saveStudent(student);
     }
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}",produces = "application/json")
     StudentDTO getSelectedStudent(@PathVariable ("id") String id){
        return studentService.getSelectedStudent(id);
+    }
+    @GetMapping(produces = "application/json")
+    List<StudentDTO> getAllStudent(){
+        return studentService.getAllStudent();
     }
 }
