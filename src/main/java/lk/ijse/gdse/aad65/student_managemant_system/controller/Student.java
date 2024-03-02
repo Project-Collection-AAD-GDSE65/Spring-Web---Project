@@ -30,4 +30,8 @@ public class Student {
     List<StudentDTO> getAllStudent(){
         return studentService.getAllStudent();
     }
+    @DeleteMapping(value = "/{id}")
+    public void deleteStudent(@PathVariable ("id") String id){
+        studentService.deleteStudent(id);
+    }
 }
