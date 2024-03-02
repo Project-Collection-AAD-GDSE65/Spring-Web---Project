@@ -1,10 +1,14 @@
 package lk.ijse.gdse.aad65.student_managemant_system.controller;
 
+import jakarta.validation.Valid;
 import lk.ijse.gdse.aad65.student_managemant_system.dto.StudentDTO;
 import lk.ijse.gdse.aad65.student_managemant_system.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -18,8 +22,13 @@ public class Student {
     public String healthCheckStudent(){
         return "Health Check Student";
     }
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveStudent(@RequestBody StudentDTO student){
+    public void saveStudent(@Valid @RequestBody StudentDTO student, Errors errors){
+        if(errors.hasFieldErrors()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    errors.getFieldErrors().get(0).getDefaultMessage());
+        }
         studentService.saveStudent(student);
     }
     @GetMapping(value = "/{id}",produces = "application/json")
@@ -30,7 +39,8 @@ public class Student {
     List<StudentDTO> getAllStudent(){
         return studentService.getAllStudent();
     }
-    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(value = "/{id:S\\d{3}}")
     public void deleteStudent(@PathVariable ("id") String id){
         studentService.deleteStudent(id);
     }
