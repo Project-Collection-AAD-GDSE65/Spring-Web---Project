@@ -1,5 +1,6 @@
 package lk.ijse.gdse.aad65.student_managemant_system.service;
 
+import jakarta.transaction.Transactional;
 import lk.ijse.gdse.aad65.student_managemant_system.dto.StudentDTO;
 import org.springframework.stereotype.Service;
 
@@ -8,14 +9,15 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
+@Transactional
 public class StudentServiceIMPL implements StudentService{
     List<StudentDTO>saveStudent = new ArrayList<>();
 
     @Override
-    public List<StudentDTO> saveStudent(StudentDTO student) {
+    public StudentDTO saveStudent(StudentDTO student) {
          saveStudent.add(student);
          System.out.println(saveStudent);
-         return saveStudent;
+         return null;
     }
 
     @Override
@@ -42,5 +44,10 @@ public class StudentServiceIMPL implements StudentService{
                 return;
             }
         }
+    }
+
+    @Override
+    public void updateStudent(String id, StudentDTO student) {
+
     }
 }

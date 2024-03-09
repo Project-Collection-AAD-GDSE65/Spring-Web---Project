@@ -1,6 +1,7 @@
 package lk.ijse.gdse.aad65.student_managemant_system.config;
 
 import jakarta.persistence.EntityManagerFactory;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,10 @@ import javax.sql.DataSource;
 @EnableJpaRepositories("lk.ijse.gdse.aad65.student_managemant_system")
 @EnableTransactionManagement
 public class WebAppRootConfig {
+    @Bean
+    ModelMapper modelMapper(){
+        return new ModelMapper();
+    }
 
     @Bean
     public DataSource dataSource() {
