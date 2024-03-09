@@ -20,9 +20,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("lk.ijse.gdse.aad65.student_managemant_system")
+@ComponentScan(basePackages = "lk.ijse.gdse.aad65.student_managemant_system")
 @EnableWebMvc
-@EnableJpaRepositories("lk.ijse.gdse.aad65.student_managemant_system")
+@EnableJpaRepositories(basePackages = "lk.ijse.gdse.aad65.student_managemant_system")
 @EnableTransactionManagement
 public class WebAppRootConfig {
     @Bean
