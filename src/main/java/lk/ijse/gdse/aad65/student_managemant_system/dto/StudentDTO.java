@@ -17,5 +17,6 @@ public class StudentDTO implements SuperDTO {
     private String lastName;
     @NotNull(message = "Level cannot be null")
     private String level;
+    private String profilePic;
 
 }
