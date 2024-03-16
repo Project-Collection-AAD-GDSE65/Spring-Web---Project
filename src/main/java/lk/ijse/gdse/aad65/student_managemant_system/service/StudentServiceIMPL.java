@@ -29,7 +29,7 @@ public class StudentServiceIMPL implements StudentService{
 
     @Override
     public List<StudentDTO> getAllStudent() {
-        return List.of();
+       return convert.getStudentDTOList(studentDao.findAll());
     }
 
     @Override
