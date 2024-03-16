@@ -1,8 +1,10 @@
 package lk.ijse.gdse.aad65.student_managemant_system.controller;
 
 import jakarta.validation.Valid;
+import jdk.jshell.execution.Util;
 import lk.ijse.gdse.aad65.student_managemant_system.dto.StudentDTO;
 import lk.ijse.gdse.aad65.student_managemant_system.service.StudentService;
+import lk.ijse.gdse.aad65.student_managemant_system.util.UtilMatters;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
@@ -27,13 +29,27 @@ public class Student {
         return "Health Check Student";
     }
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveStudent(@Valid @RequestBody StudentDTO student, Errors errors){
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void saveStudent(@Valid
+                                @RequestPart ("firstName") String firstName,
+                                @RequestPart ("lastName") String lastName,
+                                @RequestPart ("level") String level,
+                                @RequestPart ("profilePic") String profilePic,
+                            Errors errors){
         if(errors.hasFieldErrors()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     errors.getFieldErrors().get(0).getDefaultMessage());
         }
-        studentService.saveStudent(student);
+        //Build Base64 image
+        String base64ProPic = UtilMatters.convertBase64(profilePic);
+
+        StudentDTO buildStudent = new StudentDTO();
+        buildStudent.setFirstName(firstName);
+        buildStudent.setLastName(lastName);
+        buildStudent.setLevel(level);
+        buildStudent.setProfilePic(base64ProPic);
+
+        studentService.saveStudent(buildStudent);
     }
     @GetMapping(value = "/{id}",produces = "application/json")
     ResponseEntity<StudentDTO> getSelectedStudent(@PathVariable ("id") String id){

@@ -1,6 +1,7 @@
 package lk.ijse.gdse.aad65.student_managemant_system.config;
 
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.servlet.annotation.MultipartConfig;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,6 +25,12 @@ import javax.sql.DataSource;
 @EnableWebMvc
 @EnableJpaRepositories(basePackages = "lk.ijse.gdse.aad65.student_managemant_system")
 @EnableTransactionManagement
+@MultipartConfig(
+        location = "/tmp",
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 50,
+        fileSizeThreshold = 1024 * 1024 * 5
+)
 public class WebAppRootConfig {
     @Bean
     ModelMapper modelMapper(){
@@ -58,4 +65,5 @@ public class WebAppRootConfig {
         txManager.setEntityManagerFactory(entityManagerFactory);
         return txManager;
     }
+
 }

@@ -1,5 +1,6 @@
 package lk.ijse.gdse.aad65.student_managemant_system.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -18,5 +19,6 @@ public class StudentEntity implements SuperEntity {
     private String firstName;
     private String lastName;
     private String level;
+    @Column(columnDefinition = "LONGTEXT")
     private String profilePic;
 }
