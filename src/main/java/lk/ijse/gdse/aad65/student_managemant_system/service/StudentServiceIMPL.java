@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lk.ijse.gdse.aad65.student_managemant_system.conversion.ConversionData;
 import lk.ijse.gdse.aad65.student_managemant_system.dto.StudentDTO;
 import lk.ijse.gdse.aad65.student_managemant_system.entity.StudentEntity;
+import lk.ijse.gdse.aad65.student_managemant_system.exception.NotFoundException;
 import lk.ijse.gdse.aad65.student_managemant_system.repository.StudentDao;
 import lk.ijse.gdse.aad65.student_managemant_system.util.UtilMatters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,8 @@ public class StudentServiceIMPL implements StudentService{
 
     @Override
     public StudentDTO getSelectedStudent(String id) {
-        return null;
+       if(!studentDao.existsById(id)) throw new NotFoundException("Student not found");
+       return convert.convertToStudentDTO(studentDao.getReferenceById(id));
     }
 
     @Override
