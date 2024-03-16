@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class StudentDTO implements SuperDTO {
-    @NotNull(message = "Id cannot be null")
     private String id;
     @NotNull(message = "First cannot be null")
     private String firstName;

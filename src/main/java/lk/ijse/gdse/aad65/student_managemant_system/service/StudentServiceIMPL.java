@@ -5,6 +5,7 @@ import lk.ijse.gdse.aad65.student_managemant_system.conversion.ConversionData;
 import lk.ijse.gdse.aad65.student_managemant_system.dto.StudentDTO;
 import lk.ijse.gdse.aad65.student_managemant_system.entity.StudentEntity;
 import lk.ijse.gdse.aad65.student_managemant_system.repository.StudentDao;
+import lk.ijse.gdse.aad65.student_managemant_system.util.UtilMatters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,8 @@ public class StudentServiceIMPL implements StudentService{
 
     @Override
     public StudentDTO saveStudent(StudentDTO student) {
-        StudentEntity studentEntity = convert.convertToStudentEntity(student);
-        studentEntity = studentDao.save(studentEntity);
-        return convert.convertToStudentDTO(studentEntity);
+        student.setId(UtilMatters.generateId());
+        return convert.convertToStudentDTO(studentDao.save(convert.convertToStudentEntity(student)));
     }
 
     @Override
