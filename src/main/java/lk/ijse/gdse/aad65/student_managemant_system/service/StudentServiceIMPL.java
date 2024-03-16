@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -47,6 +48,12 @@ public class StudentServiceIMPL implements StudentService{
 
     @Override
     public void updateStudent(String id, StudentDTO student) {
+        Optional<StudentEntity> tmpStudent = studentDao.findById(id);
+        if(!tmpStudent.isPresent()) throw new NotFoundException("Student not found");
+        tmpStudent.get().setFirstName(student.getFirstName());
+        tmpStudent.get().setLastName(student.getLastName());
+        tmpStudent.get().setLevel(student.getLevel());
+        tmpStudent.get().setProfilePic(student.getProfilePic());
     }
 }
 

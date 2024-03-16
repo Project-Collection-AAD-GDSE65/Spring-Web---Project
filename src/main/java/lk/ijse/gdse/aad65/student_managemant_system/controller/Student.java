@@ -50,4 +50,9 @@ public class Student {
     public void deleteStudent(@PathVariable ("id") String id){
         studentService.deleteStudent(id);
     }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateStudent(@Valid @RequestBody StudentDTO student, @PathVariable ("id") String id){
+        studentService.updateStudent(id,student);
+    }
 }
