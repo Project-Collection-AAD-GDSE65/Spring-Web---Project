@@ -30,7 +30,7 @@ public class Student {
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void saveStudent(@Valid
+    public StudentDTO saveStudent(@Valid
                                 @RequestPart ("firstName") String firstName,
                                 @RequestPart ("lastName") String lastName,
                                 @RequestPart ("level") String level,
@@ -42,14 +42,14 @@ public class Student {
         }
         //Build Base64 image
         String base64ProPic = UtilMatters.convertBase64(profilePic);
-
+        //build object
         StudentDTO buildStudent = new StudentDTO();
         buildStudent.setFirstName(firstName);
         buildStudent.setLastName(lastName);
         buildStudent.setLevel(level);
         buildStudent.setProfilePic(base64ProPic);
 
-        studentService.saveStudent(buildStudent);
+        return studentService.saveStudent(buildStudent);
     }
     @GetMapping(value = "/{id}",produces = "application/json")
     ResponseEntity<StudentDTO> getSelectedStudent(@PathVariable ("id") String id){
@@ -66,9 +66,33 @@ public class Student {
     public void deleteStudent(@PathVariable ("id") String id){
         studentService.deleteStudent(id);
     }
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public void updateStudent(@Valid @RequestBody StudentDTO student, @PathVariable ("id") String id){
+//        studentService.updateStudent(id,student);
+//    }
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateStudent(@Valid @RequestBody StudentDTO student, @PathVariable ("id") String id){
-        studentService.updateStudent(id,student);
+    @PatchMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void updateStudent(@Valid
+                                  @RequestPart ("firstName") String firstName,
+                                  @RequestPart ("lastName") String lastName,
+                                  @RequestPart ("level") String level,
+                                  @RequestPart ("profilePic") String profilePic,
+                                  @RequestParam ("id") String id,
+                                  Errors errors){
+        if(errors.hasFieldErrors()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    errors.getFieldErrors().get(0).getDefaultMessage());
+        }
+        //Build Base64 image
+        String updatedBase64ProPic = UtilMatters.convertBase64(profilePic);
+        //build object
+        StudentDTO updatedBuildStudent = new StudentDTO();
+        updatedBuildStudent.setFirstName(firstName);
+        updatedBuildStudent.setLastName(lastName);
+        updatedBuildStudent.setLevel(level);
+        updatedBuildStudent.setProfilePic(updatedBase64ProPic);
+
+        studentService.updateStudent(id,updatedBuildStudent);
     }
 }
