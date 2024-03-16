@@ -41,12 +41,12 @@ public class StudentServiceIMPL implements StudentService{
 
     @Override
     public void deleteStudent(String id) {
-
+        if(!studentDao.existsById(id)) throw new NotFoundException("Student not found");
+        studentDao.deleteById(id);
     }
 
     @Override
     public void updateStudent(String id, StudentDTO student) {
-
     }
 }
 

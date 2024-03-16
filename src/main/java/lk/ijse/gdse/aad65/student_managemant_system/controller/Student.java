@@ -46,7 +46,7 @@ public class Student {
         return studentService.getAllStudent();
     }
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping(value = "/{id:S\\d{3}}")
+    @DeleteMapping(value = "/{id}")
     public void deleteStudent(@PathVariable ("id") String id){
         studentService.deleteStudent(id);
     }
